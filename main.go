@@ -8,7 +8,7 @@ import (
 
 func main() {
 	server := gin.Default()
-	mySQL := server.Group("/mysql")
-	src.FindDataRouter(mySQL)
+	finder := server.Group("/accesslog")
+	src.FindDataRouter(finder)
 	server.Run(":8080")
 }
