@@ -1,0 +1,207 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is sample of practicing API to get data in MySQL \u0026 ES",
+        "title": "Swagger API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:8080",
+    "basePath": "/accesslog",
+    "paths": {
+        "/download/": {
+            "get": {
+                "description": "Download csv file which the account just searched",
+                "produces": [
+                    "text/csv"
+                ],
+                "tags": [
+                    "Download"
+                ],
+                "summary": "Download csv",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "account",
+                        "name": "account",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "時間,IP,RawData",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/elasticsearch/": {
+            "get": {
+                "description": "get Time, IP and RawData in ElasticSearch",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ES"
+                ],
+                "summary": "Find All Data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/pojo.Rawdata"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/elasticsearch/search": {
+            "get": {
+                "description": "get Time, IP and RawData in ElasticSearch",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ES"
+                ],
+                "summary": "Find Data under conditional search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "起始時間",
+                        "name": "StartTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "結束時間",
+                        "name": "DueTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "IP",
+                        "name": "IP",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "關鍵字搜尋",
+                        "name": "KeyWord",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/pojo.Rawdata"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mySQL/": {
+            "get": {
+                "description": "get Time, IP and RawData in MySQL",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "MySQL"
+                ],
+                "summary": "Find All Data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/pojo.Rawdata"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mySQL/search": {
+            "get": {
+                "description": "get Time, IP and RawData in MySQL",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "MySQL"
+                ],
+                "summary": "Find Data under conditional search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "起始時間",
+                        "name": "StartTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "結束時間",
+                        "name": "DueTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "IP",
+                        "name": "IP",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "關鍵字搜尋",
+                        "name": "KeyWord",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/pojo.Rawdata"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "pojo.Rawdata": {
+            "type": "object",
+            "properties": {
+                "IP": {
+                    "type": "string"
+                },
+                "RawData": {
+                    "type": "string"
+                },
+                "時間": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

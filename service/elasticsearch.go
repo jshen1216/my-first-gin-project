@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"golangAPI/pojo"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/elastic/go-elasticsearch/esapi"
@@ -17,7 +18,13 @@ import (
 var es *elasticsearch.Client
 var host string = "http://140.137.219.56:9200"
 
-// 查詢全部資料（最多回傳 10,000筆）
+// 查詢全部資料（最多回傳 1,000筆）
+// @Summary      Find All Data
+// @Description  get Time, IP and RawData in ElasticSearch
+// @Tags         ES
+// @Produce      json
+// @Success      200  {array}   pojo.Rawdata
+// @Router /elasticsearch/ [get]
 func SearchForALL(c *gin.Context) {
 	// 連線Elasticsearch (without username & password)
 	var err error
@@ -29,12 +36,12 @@ func SearchForALL(c *gin.Context) {
 		c.JSON(http.StatusBadGateway, "Elasticsearch連線失敗，原因："+err.Error()) // 連線失敗
 	}
 	var r map[string]interface{}
-	// DSL （只有抓10,000筆資料）
+	// DSL （只有抓1,000筆資料）
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
 			"match_all": map[string]interface{}{},
 		},
-		"size":             10000,
+		"size":             1000,
 		"from":             0,
 		"track_total_hits": true,
 	}
@@ -68,7 +75,17 @@ func SearchForALL(c *gin.Context) {
 	//c.JSON(http.StatusOK, len(dataList))
 }
 
-// 條件搜尋（最多回傳 10,000筆）
+// 條件搜尋（最多回傳 1,000筆）
+// @Summary      Find Data under conditional search
+// @Description  get Time, IP and RawData in ElasticSearch
+// @Tags         ES
+// @Produce      json
+// @Param        StartTime query string false "起始時間"
+// @Param        DueTime   query string false "結束時間"
+// @Param        IP        query string false "IP"
+// @Param        KeyWord   query string false "關鍵字搜尋"
+// @Success      200  {array}   pojo.Rawdata
+// @Router /elasticsearch/search [get]
 func SearchByParm(c *gin.Context) {
 	// 連線Elasticsearch (without username & password)
 	var err error
@@ -83,7 +100,9 @@ func SearchByParm(c *gin.Context) {
 
 	// 抓取時間條件
 	maxDateTime := c.Query("DueTime")
+	maxDateTime, _ = url.QueryUnescape(maxDateTime) //如果是swagger ui送的request需要解碼
 	minDateTime := c.Query("StartTime")
+	minDateTime, _ = url.QueryUnescape(minDateTime) //如果是swagger ui送的request需要解碼
 	OriginalForm := "02/Jan/2006:15:04:05"
 	dslForm := "2006-01-02 15:04:05"
 	var t1, t2 string
@@ -130,7 +149,7 @@ func SearchByParm(c *gin.Context) {
 				},
 			},
 		},
-		"size":             10000,
+		"size":             1000,
 		"from":             0,
 		"track_total_hits": true,
 	}

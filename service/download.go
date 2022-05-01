@@ -42,6 +42,13 @@ func StructToCsv(filename string, Data []pojo.Rawdata) {
 }
 
 // 下載account在tempcsv中的csv
+// @Summary      Download csv
+// @Description  Download csv file which the account just searched
+// @Tags         Download
+// @Produce      text/csv
+// @Param        account  query string true "account"
+// @Success      200  {string} string "時間,IP,RawData"
+// @Router /download/ [get]
 func DownloadCsv(c *gin.Context) {
 	// 讀取account以抓取文件
 	account := c.Query("account")

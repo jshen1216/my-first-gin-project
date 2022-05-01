@@ -1,0 +1,136 @@
+basePath: /accesslog
+definitions:
+  pojo.Rawdata:
+    properties:
+      IP:
+        type: string
+      RawData:
+        type: string
+      時間:
+        type: string
+    type: object
+host: 127.0.0.1:8080
+info:
+  contact: {}
+  description: This is sample of practicing API to get data in MySQL & ES
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger API
+  version: "1.0"
+paths:
+  /download/:
+    get:
+      description: Download csv file which the account just searched
+      parameters:
+      - description: account
+        in: query
+        name: account
+        required: true
+        type: string
+      produces:
+      - text/csv
+      responses:
+        "200":
+          description: 時間,IP,RawData
+          schema:
+            type: string
+      summary: Download csv
+      tags:
+      - Download
+  /elasticsearch/:
+    get:
+      description: get Time, IP and RawData in ElasticSearch
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/pojo.Rawdata'
+            type: array
+      summary: Find All Data
+      tags:
+      - ES
+  /elasticsearch/search:
+    get:
+      description: get Time, IP and RawData in ElasticSearch
+      parameters:
+      - description: 起始時間
+        in: query
+        name: StartTime
+        type: string
+      - description: 結束時間
+        in: query
+        name: DueTime
+        type: string
+      - description: IP
+        in: query
+        name: IP
+        type: string
+      - description: 關鍵字搜尋
+        in: query
+        name: KeyWord
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/pojo.Rawdata'
+            type: array
+      summary: Find Data under conditional search
+      tags:
+      - ES
+  /mySQL/:
+    get:
+      description: get Time, IP and RawData in MySQL
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/pojo.Rawdata'
+            type: array
+      summary: Find All Data
+      tags:
+      - MySQL
+  /mySQL/search:
+    get:
+      description: get Time, IP and RawData in MySQL
+      parameters:
+      - description: 起始時間
+        in: query
+        name: StartTime
+        type: string
+      - description: 結束時間
+        in: query
+        name: DueTime
+        type: string
+      - description: IP
+        in: query
+        name: IP
+        type: string
+      - description: 關鍵字搜尋
+        in: query
+        name: KeyWord
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/pojo.Rawdata'
+            type: array
+      summary: Find Data under conditional search
+      tags:
+      - MySQL
+swagger: "2.0"
