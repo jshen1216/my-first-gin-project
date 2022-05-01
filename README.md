@@ -9,3 +9,10 @@ New functions added on 28 April 2022:
 - get raw data in json from Elasticsearch in VM which index named accesslog
 - get raw data in json from Elasticsearch in VM which index named accesslog by searching in time period, IP and keyword
 - will also saved temp csv file to download when searching in ES as well
+
+New functions added on 1 May 2022 (dev branch):
+- use swaggo to add API documents
+- swagger ui is set up 
+-- APIs on swagger ui: get all data from mySQL & ES
+-- get data under conditaional serach from mySQL & ES
+-- download csv file
