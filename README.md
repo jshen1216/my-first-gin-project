@@ -13,6 +13,6 @@ New functions added on 28 April 2022:
 New functions added on 1 May 2022 (dev branch):
 - use swaggo to add API documents
 - swagger ui is set up 
--- APIs on swagger ui: get all data from mySQL & ES
--- get data under conditaional serach from mySQL & ES
--- download csv file
+1. APIs on swagger ui: get all data from mySQL & ES
+2. get data under conditaional serach from mySQL & ES
+3. download csv file
